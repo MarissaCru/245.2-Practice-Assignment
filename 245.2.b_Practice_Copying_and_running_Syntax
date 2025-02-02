@@ -1,0 +1,456 @@
+
+R version 4.3.3 (2024-02-29 ucrt) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+lattice theme set by effectsTheme()
+See ?effectsTheme for details.
+Loading required package: RcmdrPlugin.EZR
+RcmdrMsg: [1] NOTE: R Commander Version 2.9-2: Sun Feb 2 09:30:29 2025
+RcmdrMsg: [2] NOTE: R Version 4.3.3
+RcmdrMsg: [3] NOTE: Hello 17653
+
+Rcmdr Version 2.9-2
+
+> dataset_url <- "http://s3.amazonaws.com/practice_assignment/diet_data.zip"
+> download.file(dataset_url, "diet_data.zip")
+trying URL 'http://s3.amazonaws.com/practice_assignment/diet_data.zip'
+Content type 'application/zip' length 1124 bytes
+downloaded 1124 bytes
+
+> unzip("diet_data.zip", exdir = "diet_data")
+> list.files()
+[1] "diet_data"       "diet_data.zip"   "learningR.Rproj" "testdir"        
+> list.files("diet_data")
+[1] "Andy.csv"  "David.csv" "John.csv"  "Mike.csv"  "Steve.csv"
+> andy <- read.csv("diet_data/Andy.csv")
+> head(andy)
+  Patient.Name Age Weight Day
+1         Andy  30    140   1
+2         Andy  30    140   2
+3         Andy  30    140   3
+4         Andy  30    139   4
+5         Andy  30    138   5
+6         Andy  30    138   6
+> length(andy&Day)
+Error: object 'Day' not found
+> length(andy, "Day")
+Error in length(andy, "Day") : 
+  2 arguments passed to 'length' which requires 1
+> length(Day)
+Error: object 'Day' not found
+> length(andy)
+[1] 4
+> dim(andy)
+[1] 30  4
+> str(andy)
+'data.frame':	30 obs. of  4 variables:
+ $ Patient.Name: chr  "Andy" "Andy" "Andy" "Andy" ...
+ $ Age         : int  30 30 30 30 30 30 30 30 30 30 ...
+ $ Weight      : int  140 140 140 139 138 138 138 138 138 138 ...
+ $ Day         : int  1 2 3 4 5 6 7 8 9 10 ...
+> summary(andy)
+ Patient.Name            Age         Weight           Day       
+ Length:30          Min.   :30   Min.   :135.0   Min.   : 1.00  
+ Class :character   1st Qu.:30   1st Qu.:137.0   1st Qu.: 8.25  
+ Mode  :character   Median :30   Median :137.5   Median :15.50  
+                    Mean   :30   Mean   :137.3   Mean   :15.50  
+                    3rd Qu.:30   3rd Qu.:138.0   3rd Qu.:22.75  
+                    Max.   :30   Max.   :140.0   Max.   :30.00  
+> names(andy)
+[1] "Patient.Name" "Age"          "Weight"       "Day"         
+> andy[1, "weight"]
+NULL
+> andy[1, "Weight"]
+[1] 140
+> andy[30, "Weight"]
+[1] 135
+> andy[which(andy$Day == 30), "Weight"]
+[1] 135
+> subset(andy$Weight, andy$Day==30)
+[1] 135
+> andy_start <- andy [1, "Weight"]
+> andy_end <- andy[30, "Weight"]
+> andy_loss <- andy_start - andy_end
+> andy_loss
+[1] 5
+> files <- list.files("diet_data")
+> files
+[1] "Andy.csv"  "David.csv" "John.csv"  "Mike.csv"  "Steve.csv"
+> files[1]
+[1] "Andy.csv"
+> files[3:5]
+[1] "John.csv"  "Mike.csv"  "Steve.csv"
+> head(read.csv(files[3]))
+Warning in file(file, "rt") :
+  cannot open file 'John.csv': No such file or directory
+Error in file(file, "rt") : cannot open the connection
+> files_full <- list.files("diet_data", full.names=TRUE)
+> files_full
+[1] "diet_data/Andy.csv"  "diet_data/David.csv" "diet_data/John.csv" 
+[4] "diet_data/Mike.csv"  "diet_data/Steve.csv"
+> head(read.csv(files_full[3]))
+  Patient.Name Age Weight Day
+1         John  22    175   1
+2         John  22    175   2
+3         John  22    175   3
+4         John  22    175   4
+5         John  22    175   5
+6         John  22    175   6
+> head(andy_david)
+Error: object 'andy_david' not found
+> andy_david <- rbind(andy, read.csv(files_full[2])
++ 
++ )
+> head(andy_david)
+  Patient.Name Age Weight Day
+1         Andy  30    140   1
+2         Andy  30    140   2
+3         Andy  30    140   3
+4         Andy  30    139   4
+5         Andy  30    138   5
+6         Andy  30    138   6
+> tail(andy_david)
+   Patient.Name Age Weight Day
+55        David  35    203  25
+56        David  35    203  26
+57        David  35    202  27
+58        David  35    202  28
+59        David  35    202  29
+60        David  35    201  30
+> day_25 <- andy_david[which(andy_david$Day == 25), ]
+> day_25
+   Patient.Name Age Weight Day
+25         Andy  30    135  25
+55        David  35    203  25
+> for (i in 1:5) {
++ dat <- rbind(dat, read.csv(files(full[i])))}
+Error: object 'dat' not found
+> dat <- data.frame()
+> for (i in 1:5) {
++ dat <- rbind(dat, read.csv(files_full[i]))
++ }
+> str(dat)
+'data.frame':	150 obs. of  4 variables:
+ $ Patient.Name: chr  "Andy" "Andy" "Andy" "Andy" ...
+ $ Age         : int  30 30 30 30 30 30 30 30 30 30 ...
+ $ Weight      : int  140 140 140 139 138 138 138 138 138 138 ...
+ $ Day         : int  1 2 3 4 5 6 7 8 9 10 ...
+> for (i in 1:5) {
++     dat2 <- data.frame()
++     dat2 <- rbind(dat2, read.csv(files_full[i]))
++ }
+> str(dat2)
+'data.frame':	30 obs. of  4 variables:
+ $ Patient.Name: chr  "Steve" "Steve" "Steve" "Steve" ...
+ $ Age         : int  55 55 55 55 55 55 55 55 55 55 ...
+ $ Weight      : int  225 225 225 224 224 224 223 223 223 223 ...
+ $ Day         : int  1 2 3 4 5 6 7 8 9 10 ...
+> head(dat2)
+  Patient.Name Age Weight Day
+1        Steve  55    225   1
+2        Steve  55    225   2
+3        Steve  55    225   3
+4        Steve  55    224   4
+5        Steve  55    224   5
+6        Steve  55    224   6
+> median(dat$Weight)
+[1] NA
+> dat
+    Patient.Name Age Weight Day
+1           Andy  30    140   1
+2           Andy  30    140   2
+3           Andy  30    140   3
+4           Andy  30    139   4
+5           Andy  30    138   5
+6           Andy  30    138   6
+7           Andy  30    138   7
+8           Andy  30    138   8
+9           Andy  30    138   9
+10          Andy  30    138  10
+11          Andy  30    138  11
+12          Andy  30    138  12
+13          Andy  30    137  13
+14          Andy  30    137  14
+15          Andy  30    138  15
+16          Andy  30    139  16
+17          Andy  30    139  17
+18          Andy  30    137  18
+19          Andy  30    137  19
+20          Andy  30    137  20
+21          Andy  30    137  21
+22          Andy  30    137  22
+23          Andy  30    137  23
+24          Andy  30    135  24
+25          Andy  30    135  25
+26          Andy  30    135  26
+27          Andy  30    135  27
+28          Andy  30    135  28
+29          Andy  30    135  29
+30          Andy  30    135  30
+31         David  35    210   1
+32         David  35    209   2
+33         David  35    209   3
+34         David  35    209   4
+35         David  35    209   5
+36         David  35    209   6
+37         David  35    209   7
+38         David  35    208   8
+39         David  35    208   9
+40         David  35    208  10
+41         David  35    208  11
+42         David  35    208  12
+43         David  35    208  13
+44         David  35    207  14
+45         David  35    206  15
+46         David  35    206  16
+47         David  35    206  17
+48         David  35    205  18
+49         David  35    205  19
+50         David  35    205  20
+51         David  35    205  21
+52         David  35    204  22
+53         David  35    204  23
+54         David  35    204  24
+55         David  35    203  25
+56         David  35    203  26
+57         David  35    202  27
+58         David  35    202  28
+59         David  35    202  29
+60         David  35    201  30
+61          John  22    175   1
+62          John  22    175   2
+63          John  22    175   3
+64          John  22    175   4
+65          John  22    175   5
+66          John  22    175   6
+67          John  22    175   7
+68          John  22    175   8
+69          John  22    175   9
+70          John  22    175  10
+71          John  22    175  11
+72          John  22    175  12
+73          John  22    175  13
+74          John  22    175  14
+75          John  22    175  15
+76          John  22    175  16
+77          John  22     NA  17
+78          John  22     NA  18
+79          John  22     NA  19
+80          John  22     NA  20
+81          John  22     NA  21
+82          John  22     NA  22
+83          John  22     NA  23
+84          John  22     NA  24
+85          John  22     NA  25
+86          John  22     NA  26
+87          John  22     NA  27
+88          John  22     NA  28
+89          John  22     NA  29
+90          John  22    177  30
+91          Mike  40    188   1
+92          Mike  40    188   2
+93          Mike  40    188   3
+94          Mike  40    188   4
+95          Mike  40    189   5
+96          Mike  40    189   6
+97          Mike  40    189   7
+98          Mike  40    189   8
+99          Mike  40    189   9
+100         Mike  40    189  10
+101         Mike  40    189  11
+102         Mike  40    189  12
+103         Mike  40    189  13
+104         Mike  40    189  14
+105         Mike  40    190  15
+106         Mike  40    190  16
+107         Mike  40    190  17
+108         Mike  40    190  18
+109         Mike  40    190  19
+110         Mike  40    190  20
+111         Mike  40    190  21
+112         Mike  40    190  22
+113         Mike  40    190  23
+114         Mike  40    192  24
+115         Mike  40    192  25
+116         Mike  40    192  26
+117         Mike  40    192  27
+118         Mike  40    192  28
+119         Mike  40    192  29
+120         Mike  40    192  30
+121        Steve  55    225   1
+122        Steve  55    225   2
+123        Steve  55    225   3
+124        Steve  55    224   4
+125        Steve  55    224   5
+126        Steve  55    224   6
+127        Steve  55    223   7
+128        Steve  55    223   8
+129        Steve  55    223   9
+130        Steve  55    223  10
+131        Steve  55    223  11
+132        Steve  55    222  12
+133        Steve  55    221  13
+134        Steve  55    221  14
+135        Steve  55    221  15
+136        Steve  55    220  16
+137        Steve  55    220  17
+138        Steve  55    219  18
+139        Steve  55    219  19
+140        Steve  55    219  20
+141        Steve  55    218  21
+142        Steve  55    217  22
+143        Steve  55    217  23
+144        Steve  55    217  24
+145        Steve  55    216  25
+146        Steve  55    215  26
+147        Steve  55    215  27
+148        Steve  55    214  28
+149        Steve  55    214  29
+150        Steve  55    214  30
+> median(dat$Weight, na.rm=TRUE)
+[1] 190
+> dat_30 <- dat[which(dat[,"Day"] == 30),]
+> dat_30
+    Patient.Name Age Weight Day
+30          Andy  30    135  30
+60         David  35    201  30
+90          John  22    177  30
+120         Mike  40    192  30
+150        Steve  55    214  30
+> median(dat_30$Weight)
+[1] 192
+> weightmedian <- function(directory, day) { # content of the function }
++ weightmedian <- function(directory, day) {
++ files_list <- list.files(directory, full.names=TRUE)
++ esc
++ end
++ info
++ help
++ )
+Error: unexpected ')' in:
+"help
+)"
+> weightmedian <- function(directory, day)  {
++     files_list <- list.files(directory, full.names=TRUE)   #creates a list of files
++     dat <- data.frame()                             #creates an empty data frame
++     for (i in 1:5) {                                
++         #loops through the files, rbinding them together 
++         dat <- rbind(dat, read.csv(files_list[i]))
++     }
++     dat_subset <- dat[which(dat[, "Day"] == day),]  #subsets the rows that match the 'day' argument
++     median(dat_subset[, "Weight"], na.rm=TRUE)      #identifies the median weight 
++     #while stripping out the NAs
++ }
+> weightmedian(directory = diet_date", day = 20")
+Error: unexpected string constant in "weightmedian(directory = diet_date", day = 20""
+> weightmedian(directory = diet_data", day = 20")
+Error: unexpected string constant in "weightmedian(directory = diet_data", day = 20""
+> weightmedian(directory = "diet_data", day = 20")
++ )
++ weightmedian(directory = "diet_data", day = 20)
+Error: unexpected string constant in:
+")
+weightmedian(directory = ""
+> weightmedian(directory = "diet_data", day = 20)
+[1] 197.5
+> weightmedian("diet_data", 4)
+[1] 188
+> weightmedian("diet_data", 17)
+[1] 198
+> summary(files_full)
+   Length     Class      Mode 
+        5 character character 
+> tmp <- vector(mode = "list", length = length(files_full))
+> summary(tmp)
+     Length Class  Mode
+[1,] 0      -none- NULL
+[2,] 0      -none- NULL
+[3,] 0      -none- NULL
+[4,] 0      -none- NULL
+[5,] 0      -none- NULL
+> for (i in seq_along(files_full)) {}
+> for (i in seq_along(files_full)) {
++ tmp[[i]] <- read.csv(files_full[[i]])
++ }
+> str(tmp)
+List of 5
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Andy" "Andy" "Andy" "Andy" ...
+  ..$ Age         : int [1:30] 30 30 30 30 30 30 30 30 30 30 ...
+  ..$ Weight      : int [1:30] 140 140 140 139 138 138 138 138 138 138 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "David" "David" "David" "David" ...
+  ..$ Age         : int [1:30] 35 35 35 35 35 35 35 35 35 35 ...
+  ..$ Weight      : int [1:30] 210 209 209 209 209 209 209 208 208 208 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "John" "John" "John" "John" ...
+  ..$ Age         : int [1:30] 22 22 22 22 22 22 22 22 22 22 ...
+  ..$ Weight      : int [1:30] 175 175 175 175 175 175 175 175 175 175 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Mike" "Mike" "Mike" "Mike" ...
+  ..$ Age         : int [1:30] 40 40 40 40 40 40 40 40 40 40 ...
+  ..$ Weight      : int [1:30] 188 188 188 188 189 189 189 189 189 189 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Steve" "Steve" "Steve" "Steve" ...
+  ..$ Age         : int [1:30] 55 55 55 55 55 55 55 55 55 55 ...
+  ..$ Weight      : int [1:30] 225 225 225 224 224 224 223 223 223 223 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+> str(lapply(files_full, read.csv))
+List of 5
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Andy" "Andy" "Andy" "Andy" ...
+  ..$ Age         : int [1:30] 30 30 30 30 30 30 30 30 30 30 ...
+  ..$ Weight      : int [1:30] 140 140 140 139 138 138 138 138 138 138 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "David" "David" "David" "David" ...
+  ..$ Age         : int [1:30] 35 35 35 35 35 35 35 35 35 35 ...
+  ..$ Weight      : int [1:30] 210 209 209 209 209 209 209 208 208 208 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "John" "John" "John" "John" ...
+  ..$ Age         : int [1:30] 22 22 22 22 22 22 22 22 22 22 ...
+  ..$ Weight      : int [1:30] 175 175 175 175 175 175 175 175 175 175 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Mike" "Mike" "Mike" "Mike" ...
+  ..$ Age         : int [1:30] 40 40 40 40 40 40 40 40 40 40 ...
+  ..$ Weight      : int [1:30] 188 188 188 188 189 189 189 189 189 189 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+ $ :'data.frame':	30 obs. of  4 variables:
+  ..$ Patient.Name: chr [1:30] "Steve" "Steve" "Steve" "Steve" ...
+  ..$ Age         : int [1:30] 55 55 55 55 55 55 55 55 55 55 ...
+  ..$ Weight      : int [1:30] 225 225 225 224 224 224 223 223 223 223 ...
+  ..$ Day         : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+> str(tmp[[1]])
+'data.frame':	30 obs. of  4 variables:
+ $ Patient.Name: chr  "Andy" "Andy" "Andy" "Andy" ...
+ $ Age         : int  30 30 30 30 30 30 30 30 30 30 ...
+ $ Weight      : int  140 140 140 139 138 138 138 138 138 138 ...
+ $ Day         : int  1 2 3 4 5 6 7 8 9 10 ...
+> output <- do.call(rbind, tmp)
+> str(output)
+'data.frame':	150 obs. of  4 variables:
+ $ Patient.Name: chr  "Andy" "Andy" "Andy" "Andy" ...
+ $ Age         : int  30 30 30 30 30 30 30 30 30 30 ...
+ $ Weight      : int  140 140 140 139 138 138 138 138 138 138 ...
+ $ Day         : int  1 2 3 4 5 6 7 8 9 10 ...
