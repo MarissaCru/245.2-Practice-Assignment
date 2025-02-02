@@ -1,29 +1,3 @@
-
-R version 4.3.3 (2024-02-29 ucrt) -- "Angel Food Cake"
-Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-lattice theme set by effectsTheme()
-See ?effectsTheme for details.
-Loading required package: RcmdrPlugin.EZR
-RcmdrMsg: [1] NOTE: R Commander Version 2.9-2: Sun Feb 2 09:30:29 2025
-RcmdrMsg: [2] NOTE: R Version 4.3.3
-RcmdrMsg: [3] NOTE: Hello 17653
-
 Rcmdr Version 2.9-2
 
 > dataset_url <- "http://s3.amazonaws.com/practice_assignment/diet_data.zip"
