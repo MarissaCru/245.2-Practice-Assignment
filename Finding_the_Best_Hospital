@@ -1,0 +1,27 @@
+setwd("C:/Users/17653/Dropbox/My PC (DESKTOP-ABQ0N2L)/Documents/learningR/Hospital")
+getwd()
+unzip("rprog_Fdata_FProgAssignment3-data.zip")
+list.files()
+outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+head(outcome)
+outcome
+best <- function(state,outcome){
+  df <- read.csv("outcome-of-care-measures.csv")
+  stayinalive <- subset(df, c(2,7,11,17,23))
+  #made a df of just the State, Hopsital name, and three outcomes
+  table <- split(df1,df1$State)
+if (outcome == "heart attack") {
+  n = 3}
+  #If heart attack is specified as column 3
+if (outcome == "heart failure") {
+    n = 4}
+  #If heart failure is specified as column 4
+if (outcome == "pneumonia") {
+    n = 5}
+  #if pneumonia is specified as column 5
+  
+ min.val <- min(table$state[,n], na.rm = TRUE)
+ #Identify the lowest value for each state, overlooking the NA results
+ row.no <- which(table$state[,n] == min.val)
+ print(table$state[1,row.no])}
+ 
