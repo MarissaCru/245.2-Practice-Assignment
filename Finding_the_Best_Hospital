@@ -1,27 +1,35 @@
-setwd("C:/Users/17653/Dropbox/My PC (DESKTOP-ABQ0N2L)/Documents/learningR/Hospital")
+setwd("####")  
 getwd()
 unzip("rprog_Fdata_FProgAssignment3-data.zip")
 list.files()
 outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
 head(outcome)
 outcome
-best <- function(state,outcome){
-  df <- read.csv("outcome-of-care-measures.csv")
-  stayinalive <- subset(df, c(2,7,11,17,23))
-  #made a df of just the State, Hopsital name, and three outcomes
-  table <- split(df1,df1$State)
-if (outcome == "heart attack") {
-  n = 3}
-  #If heart attack is specified as column 3
-if (outcome == "heart failure") {
-    n = 4}
-  #If heart failure is specified as column 4
-if (outcome == "pneumonia") {
-    n = 5}
-  #if pneumonia is specified as column 5
-  
- min.val <- min(table$state[,n], na.rm = TRUE)
- #Identify the lowest value for each state, overlooking the NA results
- row.no <- which(table$state[,n] == min.val)
- print(table$state[1,row.no])}
- 
+
+best <- function(statechoice,death,df1){
+  #statechoice <- state
+  #Death options include "Pneumonia", "Heart attack", "Heart failure"
+  #df1 <- outcome
+  # initializing the ouput hospital, which is our ultimate goal
+  besthospital <- "potato 804"
+  #Making a df of just the State, Hospital name, and three outcomes
+  stayinalive <- df1[,c(2,7,11,17,23)]
+  names(stayinalive)
+  names(stayinalive) <- c("Hospital", "State", "Heart attack", "Heart failure", "Pneumonia")
+  names(stayinalive)
+# We want to isolate only the sate, and only the disease, which we want
+# One way to do that is to use indexes
+  notdying <- stayinalive[stayinalive$State == statechoice, c("Hospital", death)]
+  names(notdying) <- c("Hospital", "deathy")
+  notdying$deathy <- as.numeric(notdying$deathy)
+  table(notdying$deathy)
+  tiny<- min(notdying$deathy, na.rm = TRUE)
+  tiny
+  notdying2 <- notdying[notdying$deathy == tiny, ]
+  table(notdying2$deathy)
+  table(notdying2$Hospital) 
+  besthospital <- notdying2$Hospital[is.na(notdying2$Hospital) == 0]
+  besthospital
+## Return hospital name in that state with lowest 30-day death
+## rate
+}
