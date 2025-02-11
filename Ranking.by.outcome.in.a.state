@@ -1,0 +1,20 @@
+setwd("C:/Users/17653/Dropbox/My PC (DESKTOP-ABQ0N2L)/Documents/learningR/Hospital")
+getwd()
+unzip("rprog_Fdata_FProgAssignment3-data.zip")
+list.files()
+
+#rankhospital <- function(state, outcome, num = "best"){
+  ## Read outcome data
+  fileofinfo <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+  fileofinfo
+  deathdays <- fileofinfo[,c(2,7,11,17,23)]
+  ## Check that state and outcome are valid
+  realstate <- fileofinfo$State==state
+  
+  ##TBD
+  
+  
+  ## Return hospital name in that state with the given rank
+  ## 30-day death rate
+  state.info <- fileofinfo[fileofinfo$State==state,]
+  state.info [,colnum]<-as.numeric(state.info[,colnum])
